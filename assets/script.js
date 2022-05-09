@@ -1,5 +1,12 @@
-
 // Remaining time in the day
+setInterval(() => {
+    let nowTime = new Date
+    let startDate = new Date(2022,1,1, nowTime.getHours() , nowTime.getMinutes() , 59);
+    let dayEnd = new Date(2022,1,1, 23 , 59 , 59); 
+    let dif = dayEnd - startDate 
+    document.querySelector('#dayRem').textContent = msToTime(dif)
+}, 1000)
+
 function msToTime(duration) {
     let minutes = Math.floor((duration / (1000 * 60)) % 60)
     let hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
@@ -10,18 +17,12 @@ function msToTime(duration) {
     return `${hours}H : ${minutes}M`
 }
 
-setInterval(() => {
-    let nowTime = new Date
-    let startDate = new Date(2022,1,1, nowTime.getHours() , nowTime.getMinutes() , 59);
-    let dayEnd = new Date(2022,1,1, 23 , 59 , 59); 
-    let dif = dayEnd - startDate 
-    document.querySelector('#dayRem').textContent = msToTime(dif)
-}, 1000)
+
 
 // Remaining time in the shift
 
 let reqTime = {
-    h: 6, m: 0
+    h: 8, m: 0
 }
 let workedTime = {
     h: 0, m: 0
@@ -29,8 +30,8 @@ let workedTime = {
 
 let hIn = document.querySelector('#hIn')
 hIn.addEventListener('input',(e) =>{
-    if( e.target.value > 6) {
-        alert('Max is 6')
+    if( e.target.value > 8) {
+        alert('Max is 8')
         e.target.value = ''
         calcTime({h: 0, m: 0}, reqTime)
 
@@ -56,8 +57,7 @@ mIn.addEventListener('input',(e) =>{
 })
 
 
-const calcTime = function(workedTime, reqTime){
-  
+const calcTime = function(workedTime, reqTime){ 
     if(reqTime.m < workedTime.m) {
         reqTime.m += 60
         reqTime.h -= 1
